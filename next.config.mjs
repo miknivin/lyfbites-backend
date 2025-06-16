@@ -1,14 +1,17 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   async headers() {
+    const isProd = process.env.NODE_ENV === "production";
+    const allowedOrigin = isProd
+      ? "https://www.lifefoods.in"
+      : "http://localhost:5173";
     return [
-      
       {
         source: "/api/:path*",
         headers: [
           {
             key: "Access-Control-Allow-Origin",
-            value: "http://localhost:5173", // your Vite frontend URL
+            value: allowedOrigin, // your Vite frontend URL
           },
           {
             key: "Access-Control-Allow-Credentials",
@@ -16,7 +19,7 @@ const nextConfig = {
           },
           {
             key: "Access-Control-Allow-Methods",
-            value: "GET, POST, OPTIONS",
+            value: "GET, POST, PUT, PATCH,OPTIONS",
           },
           {
             key: "Access-Control-Allow-Headers",
