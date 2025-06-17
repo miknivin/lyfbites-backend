@@ -1,5 +1,3 @@
-
-// src/utils/sendToken.js
 import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 
@@ -14,28 +12,26 @@ export default function sendToken(user, statusCode) {
       expiresIn: "7d",
     });
 
- 
-
- const response = NextResponse.json(
-    {
-      success: true,
-      token,
-      user: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-        password:user.password,
+    const response = NextResponse.json(
+      {
+        success: true,
+        token,
+        user: {
+          id: user._id,
+          name: user.name,
+          email: user.email,
+          // Do NOT include password in the response
+        },
       },
-    },
-    { status: statusCode }
-  );
-
+      { status: statusCode }
+    );
 
     response.cookies.set("token", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
-      maxAge: 7 * 24 * 60 * 60 * 1000,
+      secure: true, // Must be true for SameSite=None
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "strict", // Use "none" in production for cross-origin
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+      path: "/", // Ensure cookie is available for all paths
     });
 
     return response;
