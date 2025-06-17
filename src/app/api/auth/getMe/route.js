@@ -1,4 +1,3 @@
-// src/app/api/auth/getMe/route.js
 import dbConnect from "@/lib/db/connection";
 import { isAuthenticatedUser } from "@/middlewares/auth";
 import { NextResponse } from "next/server";
@@ -6,11 +5,11 @@ import User from "@/models/User";
 
 export async function GET(req) {
   try {
-    User;
     await dbConnect();
     const user = await isAuthenticatedUser(req);
 
-    return NextResponse.json(
+    // Create the response
+    const response = NextResponse.json(
       {
         success: true,
         data: {
@@ -22,6 +21,16 @@ export async function GET(req) {
       },
       { status: 200 }
     );
+
+    // Disable caching
+    response.headers.set(
+      "Cache-Control",
+      "no-store, no-cache, must-revalidate, proxy-revalidate"
+    );
+    response.headers.set("Pragma", "no-cache");
+    response.headers.set("Expires", "0");
+
+    return response;
   } catch (error) {
     console.error("getMe error:", {
       message: error.message,
