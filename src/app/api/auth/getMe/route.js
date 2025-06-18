@@ -33,9 +33,9 @@ export async function GET(req) {
     return response;
   } catch (error) {
     console.error("getMe error:", {
-      message: error.message,
-      stack: error.stack,
-      name: error.name,
+      message: error?.message,
+      // stack: error.stack,
+      name: error?.name,
     });
     return NextResponse.json(
       { success: false, message: error.message || "Internal Server Error" },
