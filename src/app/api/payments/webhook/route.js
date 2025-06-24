@@ -52,8 +52,7 @@ export async function POST(req) {
     console.log("verified payment");
 
     await dbConnect();
-    console.log("db connected");
-
+ 
     const order = await Order.create({
       shippingInfo,
       user: user._id,

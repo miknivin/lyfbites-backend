@@ -56,7 +56,7 @@ export async function POST(req) {
         state: shippingInfo.state || "",
         city: shippingInfo.city,
         phoneNo: shippingInfo.phoneNo,
-        zipCode: shippingInfo.pinCode,
+        zipCode: shippingInfo.zipCode,
         country: shippingInfo.country || "India",
       },
       itemsPrice,
