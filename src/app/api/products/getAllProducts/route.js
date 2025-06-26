@@ -2,9 +2,11 @@ import { NextResponse } from "next/server";
 import dbConnect from "@/lib/db/connection";
 import Products from "@/models/Products"; // Fixed typo in import
 import APIFilters from "../../utils/apiFilters";
+import User from "@/models/User";
 
 export async function GET(req) {
   try {
+    User;
     await dbConnect();
 
     const { searchParams } = new URL(req.url);
