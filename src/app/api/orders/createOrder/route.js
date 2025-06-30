@@ -50,7 +50,7 @@ export async function POST(req) {
         product: item.product, // Valid ObjectId string
       })),
       shippingInfo: {
-        fullName: shippingInfo.name,
+        fullName: shippingInfo.name || shippingInfo.fullName,
         address: shippingInfo.address,
         email: shippingInfo.email || "",
         state: shippingInfo.state || "",
