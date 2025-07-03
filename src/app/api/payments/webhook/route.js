@@ -5,7 +5,7 @@ import dbConnect from "@/lib/db/connection";
 import { isAuthenticatedUser } from "@/middlewares/auth";
 import User from "@/models/User";
 import { createShiprocketOrder } from "@/lib/shipRocket/createShipRocketOrder";
-
+import Product from "@/models/Products";
 export async function POST(req) {
   try {
     const user = await isAuthenticatedUser(req);
@@ -28,7 +28,7 @@ export async function POST(req) {
       totalPrice,
       taxPrice,
       orderNotes,
-      couponApplied
+      couponApplied,
     } = body;
 
     if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature) {
@@ -50,9 +50,10 @@ export async function POST(req) {
       );
     }
     console.log("verified payment");
-
+    User;
+    Product;
     await dbConnect();
- 
+
     const order = await Order.create({
       shippingInfo,
       user: user._id,
@@ -67,7 +68,7 @@ export async function POST(req) {
       taxAmount: taxPrice,
       orderNotes: orderNotes,
       totalAmount: totalPrice,
-      couponApplied
+      couponApplied,
     });
     const totalWeight = cartItems.reduce(
       (total, item) => total + item.quantity * 0.6,
