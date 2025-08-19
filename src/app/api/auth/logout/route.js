@@ -19,8 +19,6 @@ export async function POST() {
     path: "/",
    });
 
-
-  console.log(new Date(Date.now()));
-  console.log(response.cookies.get("token")); // Log the cookie for debugging
+// // Log the cookie for debugging
   return response;
 }
