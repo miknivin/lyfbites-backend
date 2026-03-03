@@ -7,11 +7,21 @@ const nextConfig = {
       : "http://localhost:5173";
     return [
       {
+        // COOP header needed for Firebase Google popup sign-in
+        source: "/(.*)",
+        headers: [
+          {
+            key: "Cross-Origin-Opener-Policy",
+            value: "same-origin-allow-popups",
+          },
+        ],
+      },
+      {
         source: "/api/:path*",
         headers: [
           {
             key: "Access-Control-Allow-Origin",
-            value: allowedOrigin, // your Vite frontend URL
+            value: allowedOrigin,
           },
           {
             key: "Access-Control-Allow-Credentials",
@@ -23,7 +33,7 @@ const nextConfig = {
           },
           {
             key: "Access-Control-Allow-Headers",
-            value: "Content-Type",
+            value: "Content-Type, Authorization",
           },
         ],
       },
